@@ -1,0 +1,122 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Stats API
+servers:
+  - url: 'https://fc233e9c-1947-4df6-ae12-4f4ec7b34b1d.mock.pstmn.io'
+paths:
+  /update:
+    put:
+      summary: put metrics updates
+      tags:
+        - metrics
+      responses:
+        '200':
+          description: OK - Metrics created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                example-1:
+                  value:
+                    code: 200
+                    payload: 'Metrics Successfully Stored'
+      operationId: put-metrics
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                metrics:
+                  $ref: '#/components/schemas/Metrics'
+              required:
+                - metrics
+            examples:
+              example-1:
+                value:
+                  metrics:
+                    - startDate: '01/01/2021'
+                      endDate: '01/01/2021'
+                      data: '<Metrics data>'
+        description: Body example
+      description: Post data
+  /error:
+    post:
+      summary: Post errors
+      tags:
+        - metrics
+      responses:
+        '201':
+          description: Error Metrics Notified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                example-1:
+                  value:
+                    code: 200
+                    payload: 'Successfully Notified - Microsoft Teams'
+      operationId: post-errors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  $ref: '#/components/schemas/Error'
+              required:
+                - error
+            examples:
+              example-1:
+                value:
+                  error:
+                    - startDate: '01/01/2021'
+                      endDate: '01/01/2021'
+                      proxy: 'Proxy name'
+                      numberOfErrors: 2
+        description: Number of errors by API
+      description: Send an update for a proxy during a period of time
+components:
+  schemas:
+    Metrics:
+      type: object
+      required:
+        - startDate
+        - endDate
+        - data
+      properties:
+        startDate:
+          type: string
+        endDate:
+          type: string
+        data:
+          type: string
+    Error:
+      type: object
+      required:
+        - proxy
+        - numberOfErrors
+      properties:
+        startDate:
+          type: string
+        endDate:
+          type: string
+        proxy:
+          type: string
+        numberOfErrors:
+          type: integer
+          format: int32
+    Result:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: integer
+          format: int32
+        payload:
+          type: string
