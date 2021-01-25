@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Stats API
 servers:
-  - url: 'https://fc233e9c-1947-4df6-ae12-4f4ec7b34b1d.mock.pstmn.io'
+  - url: 'https://83402f55-73aa-4880-b3b3-345eb7a2fb80.mock.pstmn.io'
 paths:
   /update:
     put:
